@@ -7,7 +7,7 @@ Original file is located at
     https://colab.research.google.com/drive/1ufeyD_9691IAhuebZThx2njR0JjAtyE9
 """
 
-!pip install opencv-python
+#!pip install opencv-python
 
 import cv2
 
