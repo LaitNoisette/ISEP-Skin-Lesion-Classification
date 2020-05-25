@@ -7,8 +7,8 @@ Original file is located at
     https://colab.research.google.com/drive/1KZinfMBV1F904PLoB1dpKtWhWtJe3PH7
 """
 
-from google.colab.patches import cv2_imshow
 import cv2
+from google.colab.patches import cv2_imshow
 import pandas as pd
 import os, json
 
