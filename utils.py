@@ -14,7 +14,7 @@ import os, json
 
 def imShowScale(im,scale=10):
   imResize=cv2.resize(im,(int(im.shape[1]/scale),int(im.shape[0]/scale)))
-  cv2_imshow(imResize)
+  #cv2_imshow(imResize)
 
 def prepareExcelFile(rootPath,fileName):
   def add_name_and_commonPath_columns(data):
