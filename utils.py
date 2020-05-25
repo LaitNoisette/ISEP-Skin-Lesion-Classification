@@ -8,6 +8,20 @@ Original file is located at
 """
 
 from google.colab.patches import cv2_imshow
+import pandas as pd
+import os, json
 
 def imShowScale(im,scale=10):
     cv2_imshow(cv2.resize(im,(int(im.shape[1]/scale),int(im.shape[0]/scale))))
+
+def prepareExcelFile(rootPath,fileName):
+  def add_name_and_commonPath_columns(data):
+     data['name'] = data.iloc[:,0].map(lambda x : (((x.split('\\'))[-1]).split('.'))[0])
+     data['commonPath'] = data.iloc[:,0].map(lambda x : '/'.join(((x.split('\\'))[-3:])) )
+     return data
+
+  filePath = os.path.join(rootPath,fileName)
+
+  fileData = pd.read_excel(filePath, header=None,names=['path'])
+  fileData= add_name_and_commonPath_columns(fileData)
+  return fileData
