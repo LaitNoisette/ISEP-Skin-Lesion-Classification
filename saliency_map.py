@@ -7,7 +7,7 @@ Original file is located at
     https://colab.research.google.com/drive/1FTdJG-3LVVU5J38LqOMQ1jCsMaZT06XH
 """
 
-!pip install opencv-python
+pip install opencv-python
 
 import cv2
 from google.colab.patches import cv2_imshow
