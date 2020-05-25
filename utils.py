@@ -8,6 +8,7 @@ Original file is located at
 """
 
 from google.colab.patches import cv2_imshow
+import cv2
 import pandas as pd
 import os, json
 
