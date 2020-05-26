@@ -28,7 +28,8 @@ def prepareExcelFile(rootPath,fileName):
   fileData= add_name_and_commonPath_columns(fileData)
   return fileData
 
-def savePicture(rootPath,fileName,im):
+def savePicture(rootPath,fileName,fileExtension,im):
   filePath = os.path.join(rootPath,fileName)
+  filePath = os.path.join(filePath,fileExtension)
   if not os.path.isfile(filePath):
     cv2.imwrite(filePath,im)
