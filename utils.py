@@ -30,5 +30,5 @@ def prepareExcelFile(rootPath,fileName):
 
 def savePicture(rootPath,fileName,im):
   filePath = os.path.join(rootPath,fileName)
-  if !os.path.isfile(filePath):
+  if not os.path.isfile(filePath):
     cv2.imwrite(filePath,im)
