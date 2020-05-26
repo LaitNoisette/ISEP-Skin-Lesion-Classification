@@ -13,7 +13,6 @@ import pandas as pd
 import os, json
 
 def imShowScale(im,scale=10):
-  import cv2
   imResize=cv2.resize(im,(int(im.shape[1]/scale),int(im.shape[0]/scale)))
   cv2_imshow(imResize)
 
@@ -28,3 +27,8 @@ def prepareExcelFile(rootPath,fileName):
   fileData = pd.read_excel(filePath, header=None,names=['path'])
   fileData= add_name_and_commonPath_columns(fileData)
   return fileData
+
+def savePicture(rootPath,fileName,im):
+  filePath = os.path.join(rootPath,fileName)
+  if !os.path.isfile(filePath):
+    cv2.imwrite(filePath,im)
