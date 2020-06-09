@@ -17,9 +17,13 @@ class KernelPatch():
   imRoiPadding=None
   imPatchList=None
 
-  def __init__(self,kernelSize,imRoi):
+  def __init__(self,kernelSize,imRoi,imPath):
+    if imPath==True:
+      self.imRoi=cv2.imread(imRoi)
+    else:
+      self.imRoi=imRoi
+
     self.patchKernelSize=kernelSize
-    self.imRoi=imRoi
     self.imRoiPadding=self.generateRoiWithPadding()
   
   def extractOverlappingPatchListFromROI(self):
