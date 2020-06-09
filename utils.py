@@ -81,7 +81,7 @@ def prepareDataset(patchDictionaryList):
     Y_dataset.append(patchDict['benign_malignant'])
 
   Y_dataset=np.array(Y_dataset)
-  #Y_dataset = Y_dataset.reshape((1, Y_dataset.shape[0]))
+  Y_dataset = Y_dataset.reshape((1, Y_dataset.shape[0]))
 
   Y_dataset[Y_dataset == 'benign']=0
   Y_dataset[Y_dataset == 'malignant']=1
