@@ -37,6 +37,34 @@ def prepareExcelFile(rootPath,fileName,metadataFileName):
   X_filedata_metadata= X_metadata(metaData,fileData)
   return X_filedata_metadata
 
+def loadDataset(fileMetadataList,rootPath,pictureFolderPath,nbPicture=-1):
+  patchDictList=[]
+  for index, row in fileMetadataList.head(nbPicture).iterrows(): 
+    fileName=row["name"]
+    fileExtension='.jpg'
+
+    picturePath=os.path.join(rootPath,pictureFolderPath)
+
+    fileNameExt=fileName+fileExtension
+    picturePath = os.path.join(picturePath,fileNameExt)
+
+    if os.path.isfile(picturePath):
+      print (row["commonPath"])
+
+      kernelPatch=kernel_patching.KernelPatch(3,picturePath,True)
+      kernelPatch.extractOverlappingPatchListFromROI()
+
+      for patch in kernelPatch.imPatchList:
+        patchDict = {
+            "imName": fileNameExt,
+            "patch":patch,
+            "benign_malignant":row['meta.clinical.benign_malignant']
+            }
+        #print (patchDict)
+        patchDictList.append(patchDict)
+  
+  return patchDictList
+
 def savePicture(rootPath,fileName,fileExtension,im):
   fileName=fileName+fileExtension
   filePath = os.path.join(rootPath,fileName)
