@@ -12,6 +12,8 @@ from google.colab.patches import cv2_imshow
 import pandas as pd
 import os, json
 
+import kernel_patching
+
 def imShowScale(im,scale=10):
   imResize=cv2.resize(im,(int(im.shape[1]/scale),int(im.shape[0]/scale)))
   cv2_imshow(imResize)
