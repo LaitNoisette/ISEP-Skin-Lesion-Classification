@@ -67,6 +67,26 @@ def loadDataset(fileMetadataList,rootPath,pictureFolderPath,nbPicture=-1):
   
   return patchDictList
 
+def prepareDataset(patchDictionaryList):
+  def convert_to_one_hot(Y, C):
+    Y = np.eye(C)[Y.reshape(-1)].T
+    return Y
+  
+  X_dataset=[]
+  Y_dataset=[]
+
+  for patchDict in patchDictionaryList:
+    X_dataset.append(patchDict['patch'])
+    Y_dataset.append(patchDict['benign_malignant'])
+
+  Y_dataset=np.array(Y_dataset)
+  #Y_dataset = Y_dataset.reshape((1, Y_dataset.shape[0]))
+
+  Y_dataset[Y_dataset == 'benign']=0
+  Y_dataset[Y_dataset == 'malignant']=1
+
+  return np.array(X_dataset),convert_to_one_hot(np.uint(Y_dataset),2)
+
 def savePicture(rootPath,fileName,fileExtension,im):
   fileName=fileName+fileExtension
   filePath = os.path.join(rootPath,fileName)
