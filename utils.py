@@ -40,7 +40,7 @@ def prepareExcelFile(rootPath,fileName,metadataFileName):
   X_filedata_metadata= X_metadata(metaData,fileData)
   return X_filedata_metadata
 
-def loadDataset(fileMetadataList,rootPath,pictureFolderPath,nbPicture=-1):
+def loadDataset(fileMetadataList,rootPath,pictureFolderPath,patchSize=5,nbPicture=-1):
   patchDictList=[]
   for index, row in fileMetadataList.head(nbPicture).iterrows(): 
     fileName=row["name"]
@@ -54,7 +54,7 @@ def loadDataset(fileMetadataList,rootPath,pictureFolderPath,nbPicture=-1):
     if os.path.isfile(picturePath):
       print (row["commonPath"])
 
-      kernelPatch=kernel_patching.KernelPatch(3,picturePath,True)
+      kernelPatch=kernel_patching.KernelPatch(patchSize,picturePath,True)
       kernelPatch.extractOverlappingPatchListFromROI()
 
       for patch in kernelPatch.imPatchList:
