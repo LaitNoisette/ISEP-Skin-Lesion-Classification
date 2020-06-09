@@ -16,17 +16,26 @@ def imShowScale(im,scale=10):
   imResize=cv2.resize(im,(int(im.shape[1]/scale),int(im.shape[0]/scale)))
   cv2_imshow(imResize)
 
-def prepareExcelFile(rootPath,fileName):
+def prepareExcelFile(rootPath,fileName,metadataFileName):
   def add_name_and_commonPath_columns(data):
      data['name'] = data.iloc[:,0].map(lambda x : (((x.split('\\'))[-1]).split('.'))[0])
      data['commonPath'] = data.iloc[:,0].map(lambda x : '/'.join(((x.split('\\'))[-3:])) )
      return data
+  def X_metadata(metadata,X_data):
+    metadata = pd.merge(metaData, X_data,  how='inner', on='name')
+    metadata['path'] = metadata.commonPath.map(lambda x : os.path.join(root_path,x))
+    return metadata[['name','commonPath','path','meta.clinical.benign_malignant']]
 
   filePath = os.path.join(rootPath,fileName)
 
   fileData = pd.read_excel(filePath, header=None,names=['path'])
   fileData= add_name_and_commonPath_columns(fileData)
-  return fileData
+
+  metadataPath = os.path.join(rootPath,metadataFileName)
+  metaData = pd.read_csv(metadataPath)
+
+  X_filedata_metadata= X_metadata(metaData,fileData)
+  return X_filedata_metadata
 
 def savePicture(rootPath,fileName,fileExtension,im):
   fileName=fileName+fileExtension
