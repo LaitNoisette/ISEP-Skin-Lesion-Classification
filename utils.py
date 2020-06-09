@@ -23,7 +23,7 @@ def prepareExcelFile(rootPath,fileName,metadataFileName):
      return data
   def X_metadata(metadata,X_data):
     metadata = pd.merge(metaData, X_data,  how='inner', on='name')
-    metadata['path'] = metadata.commonPath.map(lambda x : os.path.join(root_path,x))
+    metadata['path'] = metadata.commonPath.map(lambda x : os.path.join(rootPath,x))
     return metadata[['name','commonPath','path','meta.clinical.benign_malignant']]
 
   filePath = os.path.join(rootPath,fileName)
