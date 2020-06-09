@@ -69,7 +69,7 @@ def loadDataset(fileMetadataList,rootPath,pictureFolderPath,patchSize=5,nbPictur
   return patchDictList
 
 def prepareDataset(patchDictionaryList):
-  def convert_to_one_hot(Y, C):
+  def convert_to_one_hot(Y, C=2):
     Y = np.eye(C)[Y.reshape(-1)].T
     return Y
   
@@ -81,12 +81,28 @@ def prepareDataset(patchDictionaryList):
     Y_dataset.append(patchDict['benign_malignant'])
 
   Y_dataset=np.array(Y_dataset)
+
+  # labelencoder = LabelEncoder()
+  # Assigning numerical values and storing in another column
+  # Y_dataset= labelencoder.fit_transform(Y_dataset)
+
   Y_dataset = Y_dataset.reshape((1, Y_dataset.shape[0]))
 
   Y_dataset[Y_dataset == 'benign']=0
   Y_dataset[Y_dataset == 'malignant']=1
+  Y_dataset=np.uint(Y_dataset)
 
-  return np.array(X_dataset),convert_to_one_hot(np.uint(Y_dataset),2)
+  
+  
+  # creating instance of one-hot-encoder
+  # enc = OneHotEncoder(handle_unknown='ignore')
+  # passing bridge-types-cat column (label encoded values of bridge_types)
+  # enc_df = pd.DataFrame(enc.fit_transform(bridge_df[['Bridge_Types_Cat']]).toarray())
+  # merge with main df bridge_df on key values
+  # bridge_df = bridge_df.join(enc_df)
+  # Y_dataset=enc.fit_transform(Y_dataset)
+
+  return np.array(X_dataset),convert_to_one_hot(Y_dataset).T
 
 def savePicture(rootPath,fileName,fileExtension,im):
   fileName=fileName+fileExtension
