@@ -10,6 +10,7 @@ Original file is located at
 #!pip install opencv-python
 
 import cv2
+import numpy as np
 
 class KernelPatch():
   patchKernelSize=None
