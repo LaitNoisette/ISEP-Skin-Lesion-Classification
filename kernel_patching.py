@@ -43,10 +43,10 @@ class KernelPatch():
     listPatch=[]
     while(baseX+patchSize<=maxXpos):
       while(baseY+patchSize<=maxYpos):
-        listPatch.append(roiPadding[baseX:baseX+patchSize-1,baseY:baseY+patchSize-1])
-        baseY+=patchSize
+        listPatch.append(roiPadding[baseX:baseX+patchSize,baseY:baseY+patchSize])
+        baseY+=patchSize+1
       baseY=0
-      baseX+=patchSize
+      baseX+=patchSize+1
     
     self.imPatchList=np.array(listPatch)
     return self.imPatchList
