@@ -12,6 +12,8 @@ Original file is located at
 import cv2
 import numpy as np
 
+import utils
+
 class KernelPatch():
   patchKernelSize=None
   imRoi=None
@@ -67,3 +69,9 @@ class KernelPatch():
     
     self.imRoiPadding=cv2.copyMakeBorder(imCrop,topBottomPadding,topBottomPadding,leftRightPadding,leftRightPadding,borderType)
     return self.imRoiPadding
+  
+  def savePatchsToFolder(self,rootPath,fileName,fileExtension):
+    patchIndex=0
+    for patch in self.imPatchList:
+      utils.savePicture(rootPath,fileName+'-'+str(patchIndex),fileExtension,patch)
+      patchIndex+=1

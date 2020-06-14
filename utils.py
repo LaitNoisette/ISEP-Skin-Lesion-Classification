@@ -68,6 +68,23 @@ def loadDataset(fileMetadataList,rootPath,pictureFolderPath,patchSize=5,nbPictur
   
   return patchDictList
 
+def saveDatasetPatch(fileMetadataList,rootPath,pictureFolderPath,patchSize=5,nbPicture=-1):
+  for index, row in fileMetadataList.head(nbPicture).iterrows(): 
+    fileName=row["name"]
+    fileExtension='.jpg'
+
+    picturePath=os.path.join(rootPath,pictureFolderPath)
+
+    fileNameExt=fileName+fileExtension
+    picturePath = os.path.join(picturePath,fileNameExt)
+
+    if os.path.isfile(picturePath):
+      print (row["commonPath"])
+
+      kernelPatch=kernel_patching.KernelPatch(patchSize,picturePath,True)
+      kernelPatch.extractOverlappingPatchListFromROI()
+      kernelPatch.savePatchsToFolder(rootPath,fileName,fileExtension)
+
 def prepareDataset(patchDictionaryList):
   def convert_to_one_hot(Y, C=2):
     Y = np.eye(C)[Y.reshape(-1)].T
